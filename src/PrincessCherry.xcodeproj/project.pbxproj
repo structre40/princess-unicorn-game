@@ -1,0 +1,609 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6601AC6E213777B400D4B7CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601AC6D213777B400D4B7CA /* AppDelegate.swift */; };
+		6601AC70213777B500D4B7CA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6601AC6F213777B500D4B7CA /* GameScene.sks */; };
+		6601AC72213777B500D4B7CA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6601AC71213777B500D4B7CA /* Actions.sks */; };
+		6601AC74213777B500D4B7CA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601AC73213777B500D4B7CA /* GameScene.swift */; };
+		6601AC76213777B600D4B7CA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601AC75213777B600D4B7CA /* GameViewController.swift */; };
+		6601AC79213777B600D4B7CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6601AC77213777B600D4B7CA /* Main.storyboard */; };
+		6601AC7B213777CC00D4B7CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6601AC7A213777CC00D4B7CA /* Assets.xcassets */; };
+		6601AC7E213777CC00D4B7CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6601AC7C213777CC00D4B7CA /* LaunchScreen.storyboard */; };
+		6601AC89213777CD00D4B7CA /* PrincessCherryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601AC88213777CD00D4B7CA /* PrincessCherryTests.swift */; };
+		6601AC94213777CD00D4B7CA /* PrincessCherryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601AC93213777CD00D4B7CA /* PrincessCherryUITests.swift */; };
+		6601ACA2213779F500D4B7CA /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6601ACA1213779F500D4B7CA /* player.atlas */; };
+		6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6601ACA321377A0700D4B7CA /* CoinSound.mp3 */; };
+		6601ACA621377B3A00D4B7CA /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601ACA521377B3900D4B7CA /* GameElements.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6601AC85213777CD00D4B7CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6601AC62213777B300D4B7CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6601AC69213777B300D4B7CA;
+			remoteInfo = PrincessCherry;
+		};
+		6601AC90213777CD00D4B7CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6601AC62213777B300D4B7CA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6601AC69213777B300D4B7CA;
+			remoteInfo = PrincessCherry;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6601AC6A213777B400D4B7CA /* PrincessCherry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrincessCherry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6601AC6D213777B400D4B7CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6601AC6F213777B500D4B7CA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		6601AC71213777B500D4B7CA /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		6601AC73213777B500D4B7CA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		6601AC75213777B600D4B7CA /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		6601AC78213777B600D4B7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6601AC7A213777CC00D4B7CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6601AC7D213777CC00D4B7CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6601AC7F213777CC00D4B7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6601AC84213777CD00D4B7CA /* PrincessCherryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrincessCherryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6601AC88213777CD00D4B7CA /* PrincessCherryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincessCherryTests.swift; sourceTree = "<group>"; };
+		6601AC8A213777CD00D4B7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6601AC8F213777CD00D4B7CA /* PrincessCherryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrincessCherryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6601AC93213777CD00D4B7CA /* PrincessCherryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrincessCherryUITests.swift; sourceTree = "<group>"; };
+		6601AC95213777CD00D4B7CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6601ACA1213779F500D4B7CA /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
+		6601ACA321377A0700D4B7CA /* CoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CoinSound.mp3; sourceTree = "<group>"; };
+		6601ACA521377B3900D4B7CA /* GameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6601AC67213777B300D4B7CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6601AC81213777CD00D4B7CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6601AC8C213777CD00D4B7CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6601AC61213777B200D4B7CA = {
+			isa = PBXGroup;
+			children = (
+				6601AC6C213777B400D4B7CA /* PrincessCherry */,
+				6601AC87213777CD00D4B7CA /* PrincessCherryTests */,
+				6601AC92213777CD00D4B7CA /* PrincessCherryUITests */,
+				6601AC6B213777B400D4B7CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6601AC6B213777B400D4B7CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6601AC6A213777B400D4B7CA /* PrincessCherry.app */,
+				6601AC84213777CD00D4B7CA /* PrincessCherryTests.xctest */,
+				6601AC8F213777CD00D4B7CA /* PrincessCherryUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6601AC6C213777B400D4B7CA /* PrincessCherry */ = {
+			isa = PBXGroup;
+			children = (
+				6601ACA321377A0700D4B7CA /* CoinSound.mp3 */,
+				6601ACA1213779F500D4B7CA /* player.atlas */,
+				6601AC6D213777B400D4B7CA /* AppDelegate.swift */,
+				6601AC6F213777B500D4B7CA /* GameScene.sks */,
+				6601AC71213777B500D4B7CA /* Actions.sks */,
+				6601AC73213777B500D4B7CA /* GameScene.swift */,
+				6601ACA521377B3900D4B7CA /* GameElements.swift */,
+				6601AC75213777B600D4B7CA /* GameViewController.swift */,
+				6601AC77213777B600D4B7CA /* Main.storyboard */,
+				6601AC7A213777CC00D4B7CA /* Assets.xcassets */,
+				6601AC7C213777CC00D4B7CA /* LaunchScreen.storyboard */,
+				6601AC7F213777CC00D4B7CA /* Info.plist */,
+			);
+			path = PrincessCherry;
+			sourceTree = "<group>";
+		};
+		6601AC87213777CD00D4B7CA /* PrincessCherryTests */ = {
+			isa = PBXGroup;
+			children = (
+				6601AC88213777CD00D4B7CA /* PrincessCherryTests.swift */,
+				6601AC8A213777CD00D4B7CA /* Info.plist */,
+			);
+			path = PrincessCherryTests;
+			sourceTree = "<group>";
+		};
+		6601AC92213777CD00D4B7CA /* PrincessCherryUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6601AC93213777CD00D4B7CA /* PrincessCherryUITests.swift */,
+				6601AC95213777CD00D4B7CA /* Info.plist */,
+			);
+			path = PrincessCherryUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6601AC69213777B300D4B7CA /* PrincessCherry */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6601AC98213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherry" */;
+			buildPhases = (
+				6601AC66213777B300D4B7CA /* Sources */,
+				6601AC67213777B300D4B7CA /* Frameworks */,
+				6601AC68213777B300D4B7CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PrincessCherry;
+			productName = PrincessCherry;
+			productReference = 6601AC6A213777B400D4B7CA /* PrincessCherry.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6601AC83213777CD00D4B7CA /* PrincessCherryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6601AC9B213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherryTests" */;
+			buildPhases = (
+				6601AC80213777CD00D4B7CA /* Sources */,
+				6601AC81213777CD00D4B7CA /* Frameworks */,
+				6601AC82213777CD00D4B7CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6601AC86213777CD00D4B7CA /* PBXTargetDependency */,
+			);
+			name = PrincessCherryTests;
+			productName = PrincessCherryTests;
+			productReference = 6601AC84213777CD00D4B7CA /* PrincessCherryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6601AC8E213777CD00D4B7CA /* PrincessCherryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6601AC9E213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherryUITests" */;
+			buildPhases = (
+				6601AC8B213777CD00D4B7CA /* Sources */,
+				6601AC8C213777CD00D4B7CA /* Frameworks */,
+				6601AC8D213777CD00D4B7CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6601AC91213777CD00D4B7CA /* PBXTargetDependency */,
+			);
+			name = PrincessCherryUITests;
+			productName = PrincessCherryUITests;
+			productReference = 6601AC8F213777CD00D4B7CA /* PrincessCherryUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6601AC62213777B300D4B7CA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Adam Johnson";
+				TargetAttributes = {
+					6601AC69213777B300D4B7CA = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					6601AC83213777CD00D4B7CA = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 6601AC69213777B300D4B7CA;
+					};
+					6601AC8E213777CD00D4B7CA = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 6601AC69213777B300D4B7CA;
+					};
+				};
+			};
+			buildConfigurationList = 6601AC65213777B300D4B7CA /* Build configuration list for PBXProject "PrincessCherry" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6601AC61213777B200D4B7CA;
+			productRefGroup = 6601AC6B213777B400D4B7CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6601AC69213777B300D4B7CA /* PrincessCherry */,
+				6601AC83213777CD00D4B7CA /* PrincessCherryTests */,
+				6601AC8E213777CD00D4B7CA /* PrincessCherryUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6601AC68213777B300D4B7CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */,
+				6601ACA2213779F500D4B7CA /* player.atlas in Resources */,
+				6601AC79213777B600D4B7CA /* Main.storyboard in Resources */,
+				6601AC70213777B500D4B7CA /* GameScene.sks in Resources */,
+				6601AC7B213777CC00D4B7CA /* Assets.xcassets in Resources */,
+				6601AC7E213777CC00D4B7CA /* LaunchScreen.storyboard in Resources */,
+				6601AC72213777B500D4B7CA /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6601AC82213777CD00D4B7CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6601AC8D213777CD00D4B7CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6601AC66213777B300D4B7CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6601ACA621377B3A00D4B7CA /* GameElements.swift in Sources */,
+				6601AC74213777B500D4B7CA /* GameScene.swift in Sources */,
+				6601AC76213777B600D4B7CA /* GameViewController.swift in Sources */,
+				6601AC6E213777B400D4B7CA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6601AC80213777CD00D4B7CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6601AC89213777CD00D4B7CA /* PrincessCherryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6601AC8B213777CD00D4B7CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6601AC94213777CD00D4B7CA /* PrincessCherryUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6601AC86213777CD00D4B7CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6601AC69213777B300D4B7CA /* PrincessCherry */;
+			targetProxy = 6601AC85213777CD00D4B7CA /* PBXContainerItemProxy */;
+		};
+		6601AC91213777CD00D4B7CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6601AC69213777B300D4B7CA /* PrincessCherry */;
+			targetProxy = 6601AC90213777CD00D4B7CA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6601AC77213777B600D4B7CA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6601AC78213777B600D4B7CA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6601AC7C213777CC00D4B7CA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6601AC7D213777CC00D4B7CA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6601AC96213777CD00D4B7CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6601AC97213777CD00D4B7CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6601AC99213777CD00D4B7CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A6VENAP3WR;
+				INFOPLIST_FILE = PrincessCherry/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = refereeit.com.PrincessCherry;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6601AC9A213777CD00D4B7CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A6VENAP3WR;
+				INFOPLIST_FILE = PrincessCherry/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = refereeit.com.PrincessCherry;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6601AC9C213777CD00D4B7CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PrincessCherryTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = refereeit.com.PrincessCherryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrincessCherry.app/PrincessCherry";
+			};
+			name = Debug;
+		};
+		6601AC9D213777CD00D4B7CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PrincessCherryTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = refereeit.com.PrincessCherryTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PrincessCherry.app/PrincessCherry";
+			};
+			name = Release;
+		};
+		6601AC9F213777CD00D4B7CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PrincessCherryUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = refereeit.com.PrincessCherryUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PrincessCherry;
+			};
+			name = Debug;
+		};
+		6601ACA0213777CD00D4B7CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PrincessCherryUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = refereeit.com.PrincessCherryUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PrincessCherry;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6601AC65213777B300D4B7CA /* Build configuration list for PBXProject "PrincessCherry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6601AC96213777CD00D4B7CA /* Debug */,
+				6601AC97213777CD00D4B7CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6601AC98213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6601AC99213777CD00D4B7CA /* Debug */,
+				6601AC9A213777CD00D4B7CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6601AC9B213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6601AC9C213777CD00D4B7CA /* Debug */,
+				6601AC9D213777CD00D4B7CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6601AC9E213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6601AC9F213777CD00D4B7CA /* Debug */,
+				6601ACA0213777CD00D4B7CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6601AC62213777B300D4B7CA /* Project object */;
+}
