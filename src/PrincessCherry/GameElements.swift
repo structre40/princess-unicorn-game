@@ -13,10 +13,12 @@ struct CollisionBitMask {
     static let pillarCategory:UInt32 = 0x1 << 1
     static let singleCherryCategory:UInt32 = 0x1 << 2
     static let groundCategory:UInt32 = 0x1 << 3
+    static let doubleCherryCategory:UInt32 = 0x1 << 4
 }
+//var randomIntUsedForApple = random(10)
 
 extension GameScene {
-
+    
     func createPrincessUnicorn() -> SKSpriteNode {
         //1
         let princessUnicorn = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("pu1"))
@@ -37,7 +39,7 @@ extension GameScene {
         return princessUnicorn
     }
     
-    //1
+    //Creates the restart button and resets the game
     func createRestartBtn() {
         
         restartBtn = SKSpriteNode(imageNamed: "restart")
@@ -48,7 +50,7 @@ extension GameScene {
         self.addChild(restartBtn)
         restartBtn.run(SKAction.scale(to: 1.0, duration: 0.3))
     }
-    //2
+    //Creaes the pause button to be displayed during the game running
     func createPauseBtn() {
         pauseBtn = SKSpriteNode(imageNamed: "pause")
         pauseBtn.size = CGSize(width:40, height:40)
@@ -111,21 +113,39 @@ extension GameScene {
         return taptoplayLbl
     }
     
-    func createWalls(score: Int) -> SKNode  {
-        // 1
-        let singleCheryNode = SKSpriteNode(imageNamed: "singlecherry")
-        singleCheryNode.size = CGSize(width: 30, height: 50)
-        singleCheryNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
-        singleCheryNode.physicsBody = SKPhysicsBody(rectangleOf: singleCheryNode.size)
-        singleCheryNode.physicsBody?.affectedByGravity = false
-        singleCheryNode.physicsBody?.isDynamic = false
-        singleCheryNode.physicsBody?.categoryBitMask = CollisionBitMask.singleCherryCategory
-        singleCheryNode.physicsBody?.collisionBitMask = 0
-        singleCheryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
-        singleCheryNode.color = SKColor.blue
-        // 2
+    func createPlayableItems(score: Int) -> SKNode  {
+        //If the score is a factor of 10, do the double cherry
+        cherryNode = SKSpriteNode()
         wallPair = SKNode()
         wallPair.name = "wallPair"
+        if (score > 0 && score % 10 == 0)
+        {
+            cherryNode = SKSpriteNode(imageNamed: "doublecherry")
+            cherryNode.size = CGSize(width: 30, height: 50)
+            cherryNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
+            cherryNode.physicsBody = SKPhysicsBody(rectangleOf: cherryNode.size)
+            cherryNode.physicsBody?.affectedByGravity = false
+            cherryNode.physicsBody?.isDynamic = false
+            cherryNode.physicsBody?.categoryBitMask = CollisionBitMask.doubleCherryCategory
+            cherryNode.physicsBody?.collisionBitMask = 0
+            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            cherryNode.color = SKColor.blue
+        }
+        else
+        {
+            // Prepare the single cherry
+            cherryNode = SKSpriteNode(imageNamed: "singlecherry")
+            cherryNode.size = CGSize(width: 30, height: 50)
+            cherryNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
+            cherryNode.physicsBody = SKPhysicsBody(rectangleOf: cherryNode.size)
+            cherryNode.physicsBody?.affectedByGravity = false
+            cherryNode.physicsBody?.isDynamic = false
+            cherryNode.physicsBody?.categoryBitMask = CollisionBitMask.singleCherryCategory
+            cherryNode.physicsBody?.collisionBitMask = 0
+            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            cherryNode.color = SKColor.blue
+            
+        }
         if score > 5 {
             let topWall = SKSpriteNode(imageNamed: "pillarVines")
             let btmWall = SKSpriteNode(imageNamed: "pillarVines")
@@ -162,11 +182,12 @@ extension GameScene {
         // 3
         let randomPosition = random(min: -200, max: 200)
         wallPair.position.y = wallPair.position.y +  randomPosition
-        wallPair.addChild(singleCheryNode)
+        wallPair.addChild(cherryNode)
         
         wallPair.run(moveAndRemove)
         
         return wallPair
+        
     }
     func random() -> CGFloat{
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)

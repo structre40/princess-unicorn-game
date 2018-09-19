@@ -26,10 +26,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var pauseBtn = SKSpriteNode()
     var logoImg = SKSpriteNode()
     var wallPair = SKNode()
+    var cherryNode = SKSpriteNode()
     var moveAndRemove = SKAction()
     
     //CREATE THE BIRD ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
+    let princeUnicornAtlas = SKTextureAtlas(named:"prince")
     var princessUnicornSprites = Array<SKTexture>()
     var princessUnicorn = SKSpriteNode()
     var repeatActionPrincessUnicorn = SKAction()
@@ -54,10 +56,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             //1- This run an action that creates and add pillar pairs to the scene.
             let spawn = SKAction.run({
                 () in
-                self.wallPair = self.createWalls(score: self.score)
+                
+                self.wallPair = self.createPlayableItems(score: self.score)
                 self.addChild(self.wallPair)
             })
-            //2- Here you wait for 1.5 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
+            //2- Here you wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
             let delay = SKAction.wait(forDuration: 2.0)
             let SpawnDelay = SKAction.sequence([spawn, delay])
             let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
@@ -185,8 +188,9 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 createRestartBtn()
                 pauseBtn.removeFromParent()
                 self.princessUnicorn.removeAllActions()
+                self.cherryNode.removeFromParent()
             }
-        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
             run(coinSound)
             score += 1
             scoreLbl.text = "\(score)"
@@ -194,6 +198,18 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         } else if firstBody.categoryBitMask == CollisionBitMask.singleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
             run(coinSound)
             score += 1
+            scoreLbl.text = "\(score)"
+            firstBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.doubleCherryCategory {
+            run(coinSound)
+            run(coinSound)
+            score += 2
+            scoreLbl.text = "\(score)"
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.doubleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+            run(coinSound)
+            run(coinSound)
+            score += 2
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         }

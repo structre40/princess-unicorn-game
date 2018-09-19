@@ -20,6 +20,7 @@
 		6601ACA2213779F500D4B7CA /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6601ACA1213779F500D4B7CA /* player.atlas */; };
 		6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6601ACA321377A0700D4B7CA /* CoinSound.mp3 */; };
 		6601ACA621377B3A00D4B7CA /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601ACA521377B3900D4B7CA /* GameElements.swift */; };
+		662AD9CE2151F42B004AE9BB /* Buzzer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 662AD9CD2151F42B004AE9BB /* Buzzer.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		6601ACA1213779F500D4B7CA /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 		6601ACA321377A0700D4B7CA /* CoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CoinSound.mp3; sourceTree = "<group>"; };
 		6601ACA521377B3900D4B7CA /* GameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
+		662AD9CD2151F42B004AE9BB /* Buzzer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Buzzer.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		6601AC6C213777B400D4B7CA /* PrincessCherry */ = {
 			isa = PBXGroup;
 			children = (
+				662AD9CD2151F42B004AE9BB /* Buzzer.mp3 */,
 				6601ACA321377A0700D4B7CA /* CoinSound.mp3 */,
 				6601ACA1213779F500D4B7CA /* player.atlas */,
 				6601AC6D213777B400D4B7CA /* AppDelegate.swift */,
@@ -250,6 +253,7 @@
 				6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */,
 				6601ACA2213779F500D4B7CA /* player.atlas in Resources */,
 				6601AC79213777B600D4B7CA /* Main.storyboard in Resources */,
+				662AD9CE2151F42B004AE9BB /* Buzzer.mp3 in Resources */,
 				6601AC70213777B500D4B7CA /* GameScene.sks in Resources */,
 				6601AC7B213777CC00D4B7CA /* Assets.xcassets in Resources */,
 				6601AC7E213777CC00D4B7CA /* LaunchScreen.storyboard in Resources */,
