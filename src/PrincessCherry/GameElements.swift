@@ -14,8 +14,8 @@ struct CollisionBitMask {
     static let singleCherryCategory:UInt32 = 0x1 << 2
     static let groundCategory:UInt32 = 0x1 << 3
     static let doubleCherryCategory:UInt32 = 0x1 << 4
+    static let badAppleCategory:UInt32 = 0x1 << 5
 }
-//var randomIntUsedForApple = random(10)
 
 extension GameScene {
     
@@ -31,7 +31,7 @@ extension GameScene {
         //3
         princessUnicorn.physicsBody?.categoryBitMask = CollisionBitMask.princessCategory
         princessUnicorn.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
-        princessUnicorn.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.singleCherryCategory | CollisionBitMask.groundCategory
+        princessUnicorn.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.singleCherryCategory | CollisionBitMask.groundCategory | CollisionBitMask.doubleCherryCategory | CollisionBitMask.badAppleCategory
         //4
         princessUnicorn.physicsBody?.affectedByGravity = false
         princessUnicorn.physicsBody?.isDynamic = true
@@ -114,6 +114,8 @@ extension GameScene {
     }
     
     func createPlayableItems(score: Int) -> SKNode  {
+        let randomBadApple = Int.random(in: 1..<10)
+        
         //If the score is a factor of 10, do the double cherry
         cherryNode = SKSpriteNode()
         wallPair = SKNode()
@@ -121,7 +123,7 @@ extension GameScene {
         if (score > 0 && score % 10 == 0)
         {
             cherryNode = SKSpriteNode(imageNamed: "doublecherry")
-            cherryNode.size = CGSize(width: 30, height: 50)
+            cherryNode.size = CGSize(width: 50, height: 50)
             cherryNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
             cherryNode.physicsBody = SKPhysicsBody(rectangleOf: cherryNode.size)
             cherryNode.physicsBody?.affectedByGravity = false
@@ -147,11 +149,13 @@ extension GameScene {
             
         }
         if score > 5 {
+            
             let topWall = SKSpriteNode(imageNamed: "pillarVines")
             let btmWall = SKSpriteNode(imageNamed: "pillarVines")
             
-            topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 500)
-            btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 500)
+            //TODO: Make this increasingly smaller the more score the user gets
+            topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 500 - CGFloat(score))
+            btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 500 + CGFloat(score))
             
             topWall.setScale(0.5)
             btmWall.setScale(0.5)
@@ -177,6 +181,31 @@ extension GameScene {
             if (score > 10) {
                 wallPair.addChild(btmWall)
             }
+        }
+        //If the random number is a factor of the score, display the bad apple
+        if (score > 5 && score % randomBadApple == 0)
+        {
+            badAppleNode = SKSpriteNode(imageNamed: "rottenApple")
+            badAppleNode.size = CGSize(width: 30, height: 50)
+            var verticalBadApple = CGFloat()
+            if (randomBadApple > 5)
+            {
+                verticalBadApple = (self.frame.height / 2) + CGFloat(randomBadApple + 100)
+            }
+            else
+            {
+                verticalBadApple = (self.frame.height / 2) + CGFloat(randomBadApple - 100)
+            }
+            badAppleNode.position = CGPoint(x: self.frame.width + 25, y: verticalBadApple)
+            badAppleNode.physicsBody = SKPhysicsBody(rectangleOf: badAppleNode.size)
+            badAppleNode.physicsBody?.affectedByGravity = false
+            badAppleNode.physicsBody?.isDynamic = false
+            badAppleNode.physicsBody?.categoryBitMask = CollisionBitMask.badAppleCategory
+            badAppleNode.physicsBody?.collisionBitMask = 0
+            badAppleNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            badAppleNode.color = SKColor.blue
+            wallPair.removeAllChildren()
+            wallPair.addChild(badAppleNode)
         }
         wallPair.zPosition = 1
         // 3

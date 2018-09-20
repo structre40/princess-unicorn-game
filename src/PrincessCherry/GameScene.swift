@@ -14,8 +14,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var isSleeping = Bool(false)
     //TODO: change sound to something a unicorn would do when eating the cherry instead of coin sound
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
-    //TODO: Add sound when eating the rotten apple
-    //TODO: When the unicorn princess eats the apple they fall into a deep sleep
+    let coinSoundWait = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: true)
+    let buzzerSound = SKAction.playSoundFileNamed("Buzzer.mp3", waitForCompletion: false)
     //TODO: They fall to the ground and to restart a prince comes and gives them a kiss
     
     var score = Int(0)
@@ -27,9 +27,10 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var logoImg = SKSpriteNode()
     var wallPair = SKNode()
     var cherryNode = SKSpriteNode()
+    var badAppleNode = SKSpriteNode()
     var moveAndRemove = SKAction()
     
-    //CREATE THE BIRD ATLAS FOR ANIMATION
+    //CREATE THE PLAYER ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
     let princeUnicornAtlas = SKTextureAtlas(named:"prince")
     var princessUnicornSprites = Array<SKTexture>()
@@ -201,15 +202,25 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.doubleCherryCategory {
-            run(coinSound)
+            run(coinSoundWait)
             run(coinSound)
             score += 2
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.doubleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            run(coinSound)
+            run(coinSoundWait)
             run(coinSound)
             score += 2
+            scoreLbl.text = "\(score)"
+            firstBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.badAppleCategory {
+            run(buzzerSound)
+            score -= 5
+            scoreLbl.text = "\(score)"
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.badAppleCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+            run(buzzerSound)
+            score -= 5
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         }
