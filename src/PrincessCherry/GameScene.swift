@@ -14,8 +14,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var isSleeping = Bool(false)
     //TODO: change sound to something a unicorn would do when eating the cherry instead of coin sound
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
-    //TODO: Add sound when eating the rotten apple
-    //TODO: When the unicorn princess eats the apple they fall into a deep sleep
+    let coinSoundWait = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: true)
+    let buzzerSound = SKAction.playSoundFileNamed("Buzzer.mp3", waitForCompletion: false)
     //TODO: They fall to the ground and to restart a prince comes and gives them a kiss
     
     var score = Int(0)
@@ -26,10 +26,13 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var pauseBtn = SKSpriteNode()
     var logoImg = SKSpriteNode()
     var wallPair = SKNode()
+    var cherryNode = SKSpriteNode()
+    var badAppleNode = SKSpriteNode()
     var moveAndRemove = SKAction()
     
-    //CREATE THE BIRD ATLAS FOR ANIMATION
+    //CREATE THE PLAYER ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
+    let princeUnicornAtlas = SKTextureAtlas(named:"prince")
     var princessUnicornSprites = Array<SKTexture>()
     var princessUnicorn = SKSpriteNode()
     var repeatActionPrincessUnicorn = SKAction()
@@ -54,11 +57,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             //1- This run an action that creates and add pillar pairs to the scene.
             let spawn = SKAction.run({
                 () in
-                self.wallPair = self.createWalls()
+                
+                self.wallPair = self.createPlayableItems(score: self.score)
                 self.addChild(self.wallPair)
             })
-            //2- Here you wait for 1.5 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
-            let delay = SKAction.wait(forDuration: 1.5)
+            //2- Here you wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
+            let delay = SKAction.wait(forDuration: 2.0)
             let SpawnDelay = SKAction.sequence([spawn, delay])
             let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
             self.run(spawnDelayForever)
@@ -69,12 +73,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             moveAndRemove = SKAction.sequence([movePillars, removePillars])
             
             princessUnicorn.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
+            princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
         } else {
             //4
             if isSleeping == false {
                 princessUnicorn.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
+                princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
             }
         }
         for touch in touches{
@@ -136,7 +140,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         //Creates the background
         for i in 0..<2
         {
-            let background = SKSpriteNode(imageNamed: "bg")
+            let background = SKSpriteNode(imageNamed: "bgCastle")
             background.anchorPoint = CGPoint.init(x: 0, y: 0)
             background.position = CGPoint(x:CGFloat(i) * self.frame.width, y:0)
             background.name = "background"
@@ -145,10 +149,10 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         }
         
         //SET UP THE UNICORN SPRITES FOR ANIMATION
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("bird1"))
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("bird2"))
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("bird3"))
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("bird4"))
+        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu1"))
+        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu2"))
+        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu3"))
+        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu4"))
         
         //Create the princess unicorn
         self.princessUnicorn = createPrincessUnicorn()
@@ -185,15 +189,38 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 createRestartBtn()
                 pauseBtn.removeFromParent()
                 self.princessUnicorn.removeAllActions()
+                self.cherryNode.removeFromParent()
             }
-        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
             run(coinSound)
             score += 1
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.flowerCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.singleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
             run(coinSound)
             score += 1
+            scoreLbl.text = "\(score)"
+            firstBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.doubleCherryCategory {
+            run(coinSoundWait)
+            run(coinSound)
+            score += 2
+            scoreLbl.text = "\(score)"
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.doubleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+            run(coinSoundWait)
+            run(coinSound)
+            score += 2
+            scoreLbl.text = "\(score)"
+            firstBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.badAppleCategory {
+            run(buzzerSound)
+            score -= 5
+            scoreLbl.text = "\(score)"
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.badAppleCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+            run(buzzerSound)
+            score -= 5
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         }

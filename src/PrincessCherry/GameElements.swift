@@ -11,16 +11,18 @@ import SpriteKit
 struct CollisionBitMask {
     static let princessCategory:UInt32 = 0x1 << 0
     static let pillarCategory:UInt32 = 0x1 << 1
-    static let flowerCategory:UInt32 = 0x1 << 2
+    static let singleCherryCategory:UInt32 = 0x1 << 2
     static let groundCategory:UInt32 = 0x1 << 3
+    static let doubleCherryCategory:UInt32 = 0x1 << 4
+    static let badAppleCategory:UInt32 = 0x1 << 5
 }
 
 extension GameScene {
-
+    
     func createPrincessUnicorn() -> SKSpriteNode {
         //1
-        let princessUnicorn = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("bird1"))
-        princessUnicorn.size = CGSize(width: 50, height: 50)
+        let princessUnicorn = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("pu1"))
+        princessUnicorn.size = CGSize(width: 100, height: 100)
         princessUnicorn.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
         //2
         princessUnicorn.physicsBody = SKPhysicsBody(circleOfRadius: princessUnicorn.size.width / 2)
@@ -29,7 +31,7 @@ extension GameScene {
         //3
         princessUnicorn.physicsBody?.categoryBitMask = CollisionBitMask.princessCategory
         princessUnicorn.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
-        princessUnicorn.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.flowerCategory | CollisionBitMask.groundCategory
+        princessUnicorn.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.singleCherryCategory | CollisionBitMask.groundCategory | CollisionBitMask.doubleCherryCategory | CollisionBitMask.badAppleCategory
         //4
         princessUnicorn.physicsBody?.affectedByGravity = false
         princessUnicorn.physicsBody?.isDynamic = true
@@ -37,7 +39,7 @@ extension GameScene {
         return princessUnicorn
     }
     
-    //1
+    //Creates the restart button and resets the game
     func createRestartBtn() {
         
         restartBtn = SKSpriteNode(imageNamed: "restart")
@@ -48,7 +50,7 @@ extension GameScene {
         self.addChild(restartBtn)
         restartBtn.run(SKAction.scale(to: 1.0, duration: 0.3))
     }
-    //2
+    //Creaes the pause button to be displayed during the game running
     func createPauseBtn() {
         pauseBtn = SKSpriteNode(imageNamed: "pause")
         pauseBtn.size = CGSize(width:40, height:40)
@@ -111,59 +113,110 @@ extension GameScene {
         return taptoplayLbl
     }
     
-    func createWalls() -> SKNode  {
-        // 1
-        let flowerNode = SKSpriteNode(imageNamed: "flower")
-        flowerNode.size = CGSize(width: 40, height: 40)
-        flowerNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
-        flowerNode.physicsBody = SKPhysicsBody(rectangleOf: flowerNode.size)
-        flowerNode.physicsBody?.affectedByGravity = false
-        flowerNode.physicsBody?.isDynamic = false
-        flowerNode.physicsBody?.categoryBitMask = CollisionBitMask.flowerCategory
-        flowerNode.physicsBody?.collisionBitMask = 0
-        flowerNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
-        flowerNode.color = SKColor.blue
-        // 2
+    func createPlayableItems(score: Int) -> SKNode  {
+        let randomBadApple = Int.random(in: 1..<10)
+        
+        //If the score is a factor of 10, do the double cherry
+        cherryNode = SKSpriteNode()
         wallPair = SKNode()
         wallPair.name = "wallPair"
+        if (score > 0 && score % 10 == 0)
+        {
+            cherryNode = SKSpriteNode(imageNamed: "doublecherry")
+            cherryNode.size = CGSize(width: 50, height: 50)
+            cherryNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
+            cherryNode.physicsBody = SKPhysicsBody(rectangleOf: cherryNode.size)
+            cherryNode.physicsBody?.affectedByGravity = false
+            cherryNode.physicsBody?.isDynamic = false
+            cherryNode.physicsBody?.categoryBitMask = CollisionBitMask.doubleCherryCategory
+            cherryNode.physicsBody?.collisionBitMask = 0
+            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            cherryNode.color = SKColor.blue
+        }
+        else
+        {
+            // Prepare the single cherry
+            cherryNode = SKSpriteNode(imageNamed: "singlecherry")
+            cherryNode.size = CGSize(width: 30, height: 50)
+            cherryNode.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2)
+            cherryNode.physicsBody = SKPhysicsBody(rectangleOf: cherryNode.size)
+            cherryNode.physicsBody?.affectedByGravity = false
+            cherryNode.physicsBody?.isDynamic = false
+            cherryNode.physicsBody?.categoryBitMask = CollisionBitMask.singleCherryCategory
+            cherryNode.physicsBody?.collisionBitMask = 0
+            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            cherryNode.color = SKColor.blue
+            
+        }
+        if score > 5 {
+            
+            let topWall = SKSpriteNode(imageNamed: "pillarVines")
+            let btmWall = SKSpriteNode(imageNamed: "pillarVines")
+            
+            //TODO: Make this increasingly smaller the more score the user gets
+            topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 500 - CGFloat(score))
+            btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 500 + CGFloat(score))
+            
+            topWall.setScale(0.5)
+            btmWall.setScale(0.5)
+            
+            topWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
+            topWall.physicsBody?.categoryBitMask = CollisionBitMask.pillarCategory
+            topWall.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
+            topWall.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            topWall.physicsBody?.isDynamic = false
+            topWall.physicsBody?.affectedByGravity = false
+            
+            btmWall.physicsBody = SKPhysicsBody(rectangleOf: btmWall.size)
+            btmWall.physicsBody?.categoryBitMask = CollisionBitMask.pillarCategory
+            btmWall.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
+            btmWall.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            btmWall.physicsBody?.isDynamic = false
+            btmWall.physicsBody?.affectedByGravity = false
         
-        let topWall = SKSpriteNode(imageNamed: "piller")
-        let btmWall = SKSpriteNode(imageNamed: "piller")
+            topWall.zRotation = CGFloat(Double.pi)
         
-        topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 500)
-        btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 500)
-        
-        topWall.setScale(0.5)
-        btmWall.setScale(0.5)
-        
-        topWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
-        topWall.physicsBody?.categoryBitMask = CollisionBitMask.pillarCategory
-        topWall.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
-        topWall.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
-        topWall.physicsBody?.isDynamic = false
-        topWall.physicsBody?.affectedByGravity = false
-        
-        btmWall.physicsBody = SKPhysicsBody(rectangleOf: btmWall.size)
-        btmWall.physicsBody?.categoryBitMask = CollisionBitMask.pillarCategory
-        btmWall.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
-        btmWall.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
-        btmWall.physicsBody?.isDynamic = false
-        btmWall.physicsBody?.affectedByGravity = false
-        
-        topWall.zRotation = CGFloat(Double.pi)
-        
-        wallPair.addChild(topWall)
-        wallPair.addChild(btmWall)
-        
+            wallPair.addChild(topWall)
+            
+            if (score > 10) {
+                wallPair.addChild(btmWall)
+            }
+        }
+        //If the random number is a factor of the score, display the bad apple
+        if (score > 5 && score % randomBadApple == 0)
+        {
+            badAppleNode = SKSpriteNode(imageNamed: "rottenApple")
+            badAppleNode.size = CGSize(width: 30, height: 50)
+            var verticalBadApple = CGFloat()
+            if (randomBadApple > 5)
+            {
+                verticalBadApple = (self.frame.height / 2) + CGFloat(randomBadApple + 100)
+            }
+            else
+            {
+                verticalBadApple = (self.frame.height / 2) + CGFloat(randomBadApple - 100)
+            }
+            badAppleNode.position = CGPoint(x: self.frame.width + 25, y: verticalBadApple)
+            badAppleNode.physicsBody = SKPhysicsBody(rectangleOf: badAppleNode.size)
+            badAppleNode.physicsBody?.affectedByGravity = false
+            badAppleNode.physicsBody?.isDynamic = false
+            badAppleNode.physicsBody?.categoryBitMask = CollisionBitMask.badAppleCategory
+            badAppleNode.physicsBody?.collisionBitMask = 0
+            badAppleNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            badAppleNode.color = SKColor.blue
+            wallPair.removeAllChildren()
+            wallPair.addChild(badAppleNode)
+        }
         wallPair.zPosition = 1
         // 3
         let randomPosition = random(min: -200, max: 200)
         wallPair.position.y = wallPair.position.y +  randomPosition
-        wallPair.addChild(flowerNode)
+        wallPair.addChild(cherryNode)
         
         wallPair.run(moveAndRemove)
         
         return wallPair
+        
     }
     func random() -> CGFloat{
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
