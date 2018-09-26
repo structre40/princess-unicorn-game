@@ -44,17 +44,17 @@ extension GameScene {
         //1
         let prince = SKSpriteNode(texture: SKTextureAtlas(named:"prince").textureNamed("prince1"))
         prince.size = CGSize(width: 100, height: 100)
-        prince.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
+        prince.position = CGPoint(x:self.frame.maxX, y:self.frame.minY + 50)
         //2
         prince.physicsBody = SKPhysicsBody(circleOfRadius: prince.size.width / 2)
-        prince.physicsBody?.linearDamping = 1.1
-        prince.physicsBody?.restitution = 0
+        prince.physicsBody?.linearDamping = 0.1
+        prince.physicsBody?.restitution = 0.2
         //3
         prince.physicsBody?.categoryBitMask = CollisionBitMask.princeCategory
         prince.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
         prince.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
         //4
-        prince.physicsBody?.affectedByGravity = true
+        prince.physicsBody?.affectedByGravity = false
         prince.physicsBody?.isDynamic = true
         
         return prince

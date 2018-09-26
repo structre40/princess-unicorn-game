@@ -32,41 +32,46 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     
     //CREATE THE PLAYER ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
-    let princeUnicornAtlas = SKTextureAtlas(named:"prince")
     var princessUnicornSprites = Array<SKTexture>()
     var princessUnicorn = SKSpriteNode()
     var repeatActionPrincessUnicorn = SKAction()
+    
+    let princeAtlas = SKTextureAtlas(named:"prince")
+    var princeSprites = Array<SKTexture>()
+    var prince = SKSpriteNode()
+    var repeatActionPrince = SKAction()
     
     override func didMove(to view: SKView) {
         createScene()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isGameStarted == false{
-            //1
+            //Start princess unicorn to be affected by gravity requiring use to tap and create pause button
             isGameStarted =  true
             princessUnicorn.physicsBody?.affectedByGravity = true
             createPauseBtn()
-            //2
+            //Run the logo shrinking and removal
             logoImg.run(SKAction.scale(to: 0.5, duration: 0.3), completion: {
                 self.logoImg.removeFromParent()
             })
             taptoplayLbl.removeFromParent()
-            //3
+            //Run the princess animations for flapping
             self.princessUnicorn.run(repeatActionPrincessUnicorn)
             
-            //1- This run an action that creates and add pillar pairs to the scene.
+            //This run an action that creates and add pillar pairs to the scene.
             let spawn = SKAction.run({
                 () in
                 
                 self.wallPair = self.createPlayableItems(score: self.score)
                 self.addChild(self.wallPair)
             })
-            //2- Here you wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
+            //Wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
             let delay = SKAction.wait(forDuration: 2.0)
             let SpawnDelay = SKAction.sequence([spawn, delay])
             let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
             self.run(spawnDelayForever)
-            //3
+            
+            //Move the pillars and remove as they get to the end of the frame
             let distance = CGFloat(self.frame.width + wallPair.frame.width)
             let movePillars = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
             let removePillars = SKAction.removeFromParent()
@@ -75,7 +80,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             princessUnicorn.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
         } else {
-            //4
+            //Continue with movement as long as collision did not occur
             if isSleeping == false {
                 princessUnicorn.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
@@ -190,6 +195,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 pauseBtn.removeFromParent()
                 self.princessUnicorn.removeAllActions()
                 self.cherryNode.removeFromParent()
+                showPrinceAnimation()
             }
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
             run(coinSound)
@@ -221,10 +227,37 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             score -= 5
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+            self.prince.removeAllActions()
+            
+        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
+            self.prince.removeAllActions()
         }
     }
-    
+    func showPrinceAnimation() {
+        //Show the prince and animate
+        //SET UP THE PRINCE SPRITES FOR ANIMATION
+        princeSprites.append(princeAtlas.textureNamed("prince1"))
+        princeSprites.append(princeAtlas.textureNamed("prince2"))
+        princeSprites.append(princeAtlas.textureNamed("prince3"))
+        princeSprites.append(princeAtlas.textureNamed("prince4"))
+        
+        //Create the prince
+        self.prince = createPrince()
+        self.addChild(prince)
+        
+        //PREPARE TO ANIMATE THE PRINCE AND REPEAT THE ANIMATION FOREVER
+        let animatePrince = SKAction.animate(with: self.princeSprites, timePerFrame: 0.1)
+        self.repeatActionPrince = SKAction.repeatForever(animatePrince)
+        self.prince.run(repeatActionPrince)
+        
+        let move = SKAction.moveTo(x:0, duration: 5.0)
+        prince.run(move)
+        
+    }
     func restartScene(){
+        
+        
         self.removeAllChildren()
         self.removeAllActions()
         isSleeping = false
