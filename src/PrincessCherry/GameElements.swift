@@ -15,6 +15,7 @@ struct CollisionBitMask {
     static let groundCategory:UInt32 = 0x1 << 3
     static let doubleCherryCategory:UInt32 = 0x1 << 4
     static let badAppleCategory:UInt32 = 0x1 << 5
+    static let princeCategory:UInt32 = 0x1 << 6
 }
 
 extension GameScene {
@@ -39,6 +40,26 @@ extension GameScene {
         return princessUnicorn
     }
     
+    func createPrince() -> SKSpriteNode {
+        //1
+        let prince = SKSpriteNode(texture: SKTextureAtlas(named:"prince").textureNamed("prince1"))
+        prince.size = CGSize(width: 100, height: 100)
+        prince.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
+        //2
+        prince.physicsBody = SKPhysicsBody(circleOfRadius: prince.size.width / 2)
+        prince.physicsBody?.linearDamping = 1.1
+        prince.physicsBody?.restitution = 0
+        //3
+        prince.physicsBody?.categoryBitMask = CollisionBitMask.princeCategory
+        prince.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
+        prince.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+        //4
+        prince.physicsBody?.affectedByGravity = true
+        prince.physicsBody?.isDynamic = true
+        
+        return prince
+    }
+    
     //Creates the restart button and resets the game
     func createRestartBtn() {
         
@@ -50,7 +71,7 @@ extension GameScene {
         self.addChild(restartBtn)
         restartBtn.run(SKAction.scale(to: 1.0, duration: 0.3))
     }
-    //Creaes the pause button to be displayed during the game running
+    //Creates the pause button to be displayed during the game running
     func createPauseBtn() {
         pauseBtn = SKSpriteNode(imageNamed: "pause")
         pauseBtn.size = CGSize(width:40, height:40)
@@ -82,9 +103,9 @@ extension GameScene {
         let highscoreLbl = SKLabelNode()
         highscoreLbl.position = CGPoint(x: self.frame.width - 80, y: self.frame.height - 22)
         if let highestScore = UserDefaults.standard.object(forKey: "highestScore"){
-            highscoreLbl.text = "Highest Score: \(highestScore)"
+            highscoreLbl.text = "Hi Score: \(highestScore)"
         } else {
-            highscoreLbl.text = "Highest Score: 0"
+            highscoreLbl.text = "Hi Score: 0"
         }
         highscoreLbl.zPosition = 5
         highscoreLbl.fontSize = 15
