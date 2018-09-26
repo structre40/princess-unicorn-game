@@ -23,6 +23,7 @@
 		6610DCD1215345E600351275 /* prince.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6610DCD0215345E600351275 /* prince.atlas */; };
 		66E44D8A215B2DCD00814752 /* DoubleCoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */; };
 		66E44D8B215B2DCD00814752 /* EatingApple.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D89215B2DCD00814752 /* EatingApple.mp3 */; };
+		66E44D8D215B47CE00814752 /* Kiss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D8C215B47CE00814752 /* Kiss.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		6610DCD0215345E600351275 /* prince.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = prince.atlas; sourceTree = "<group>"; };
 		66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DoubleCoinSound.mp3; sourceTree = "<group>"; };
 		66E44D89215B2DCD00814752 /* EatingApple.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = EatingApple.mp3; sourceTree = "<group>"; };
+		66E44D8C215B47CE00814752 /* Kiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Kiss.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				6601ACA321377A0700D4B7CA /* CoinSound.mp3 */,
 				66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */,
 				66E44D89215B2DCD00814752 /* EatingApple.mp3 */,
+				66E44D8C215B47CE00814752 /* Kiss.mp3 */,
 				6601ACA1213779F500D4B7CA /* player.atlas */,
 				6601AC6D213777B400D4B7CA /* AppDelegate.swift */,
 				6601AC6F213777B500D4B7CA /* GameScene.sks */,
@@ -258,6 +261,7 @@
 			files = (
 				6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */,
 				6601ACA2213779F500D4B7CA /* player.atlas in Resources */,
+				66E44D8D215B47CE00814752 /* Kiss.mp3 in Resources */,
 				6601AC79213777B600D4B7CA /* Main.storyboard in Resources */,
 				6610DCD1215345E600351275 /* prince.atlas in Resources */,
 				66E44D8A215B2DCD00814752 /* DoubleCoinSound.mp3 in Resources */,

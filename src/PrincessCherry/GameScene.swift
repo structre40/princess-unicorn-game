@@ -16,6 +16,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
     let doubleCoinSound = SKAction.playSoundFileNamed("DoubleCoinSound.mp3", waitForCompletion: false)
     let eatingAppleSound = SKAction.playSoundFileNamed("EatingApple.mp3", waitForCompletion: false)
+     let kissSound = SKAction.playSoundFileNamed("Kiss.mp3", waitForCompletion: false)
     //TODO: They fall to the ground and to restart a prince comes and gives them a kiss
     
     var score = Int(0)
@@ -228,10 +229,19 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            self.prince.removeAllActions()
+            //TODO Make prince move in closer before playing sound
+            //Possibly remove CollisionBitMask
+            let move = SKAction.moveTo(x:self.prince.position.x - 100, duration: 1.0)
+            prince.run(move)
+            run(kissSound)
+            self.prince.removeAction(forKey: "princeWalk")
             
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
-            self.prince.removeAllActions()
+            let move = SKAction.moveTo(x:self.prince.position.x - 100, duration: 1.0)
+            prince.run(move)
+            run(kissSound)
+            self.prince.removeAction(forKey: "princeWalk")
+            
         }
     }
     func showPrinceAnimation() {
@@ -249,7 +259,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         //PREPARE TO ANIMATE THE PRINCE AND REPEAT THE ANIMATION FOREVER
         let animatePrince = SKAction.animate(with: self.princeSprites, timePerFrame: 0.1)
         self.repeatActionPrince = SKAction.repeatForever(animatePrince)
-        self.prince.run(repeatActionPrince)
+        self.prince.run(repeatActionPrince, withKey: "princeWalk")
         
         let move = SKAction.moveTo(x:0, duration: 5.0)
         prince.run(move)
