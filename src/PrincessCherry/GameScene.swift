@@ -17,7 +17,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
     let doubleCoinSound = SKAction.playSoundFileNamed("DoubleCoinSound.mp3", waitForCompletion: false)
     let eatingAppleSound = SKAction.playSoundFileNamed("EatingApple.mp3", waitForCompletion: false)
-     let kissSound = SKAction.playSoundFileNamed("Kiss.mp3", waitForCompletion: false)
+     let kissSound = SKAction.playSoundFileNamed("kiss2.mp3", waitForCompletion: false)
     //TODO: They fall to the ground and to restart a prince comes and gives them a kiss
     
     var score = Int(0)
@@ -169,6 +169,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         princeSprites.append(princeAtlas.textureNamed("prince2"))
         princeSprites.append(princeAtlas.textureNamed("prince3"))
         princeSprites.append(princeAtlas.textureNamed("prince4"))
+        let animatePrince = SKAction.animate(with: self.princeSprites, timePerFrame: 0.1)
+        self.repeatActionPrince = SKAction.repeatForever(animatePrince)
         
         //PREPARE TO ANIMATE THE PRINCESS UNICORN AND REPEAT THE ANIMATION FOREVER
         let animatePrincessUnicorn = SKAction.animate(with: self.princessUnicornSprites, timePerFrame: 0.1)
@@ -199,6 +201,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             if isSleeping == false{
                 isSleeping = true
                 self.addChild(prince)
+                
                 showPrinceAnimation()
                 createRestartBtn()
                 pauseBtn.removeFromParent()
@@ -254,19 +257,15 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         //prince.run(SKAction.scale(to: 1.0, duration: 0.3))
         
         //PREPARE TO ANIMATE THE PRINCE AND REPEAT THE ANIMATION FOREVER
-        let animatePrince = SKAction.animate(with: self.princeSprites, timePerFrame: 0.1)
-        self.repeatActionPrince = SKAction.repeatForever(animatePrince)
         self.prince.run(repeatActionPrince, withKey: "princeWalk")
         
-        let move = SKAction.moveTo(x:frame.maxX, duration: 3.0)
+        let move = SKAction.moveTo(x:frame.maxX, duration: 5)
         prince.run(move) {
             self.prince.removeFromParent()
         }
         
     }
     func restartScene(){
-        
-        
         self.removeAllChildren()
         self.removeAllActions()
         isSleeping = false

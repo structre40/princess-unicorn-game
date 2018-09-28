@@ -24,6 +24,7 @@
 		66E44D8A215B2DCD00814752 /* DoubleCoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */; };
 		66E44D8B215B2DCD00814752 /* EatingApple.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D89215B2DCD00814752 /* EatingApple.mp3 */; };
 		66E44D8D215B47CE00814752 /* Kiss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D8C215B47CE00814752 /* Kiss.mp3 */; };
+		66E44D8F215DBB2700814752 /* kiss2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D8E215DBB2700814752 /* kiss2.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DoubleCoinSound.mp3; sourceTree = "<group>"; };
 		66E44D89215B2DCD00814752 /* EatingApple.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = EatingApple.mp3; sourceTree = "<group>"; };
 		66E44D8C215B47CE00814752 /* Kiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Kiss.mp3; sourceTree = "<group>"; };
+		66E44D8E215DBB2700814752 /* kiss2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kiss2.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				6601ACA321377A0700D4B7CA /* CoinSound.mp3 */,
 				66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */,
 				66E44D89215B2DCD00814752 /* EatingApple.mp3 */,
+				66E44D8E215DBB2700814752 /* kiss2.mp3 */,
 				66E44D8C215B47CE00814752 /* Kiss.mp3 */,
 				6601ACA1213779F500D4B7CA /* player.atlas */,
 				6601AC6D213777B400D4B7CA /* AppDelegate.swift */,
@@ -266,6 +269,7 @@
 				6610DCD1215345E600351275 /* prince.atlas in Resources */,
 				66E44D8A215B2DCD00814752 /* DoubleCoinSound.mp3 in Resources */,
 				6601AC70213777B500D4B7CA /* GameScene.sks in Resources */,
+				66E44D8F215DBB2700814752 /* kiss2.mp3 in Resources */,
 				6601AC7B213777CC00D4B7CA /* Assets.xcassets in Resources */,
 				6601AC7E213777CC00D4B7CA /* LaunchScreen.storyboard in Resources */,
 				6601AC72213777B500D4B7CA /* Actions.sks in Resources */,
@@ -473,6 +477,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A6VENAP3WR;
 				INFOPLIST_FILE = PrincessCherry/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -481,6 +486,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				"Texture Atlas Maximum Size" = 2048x2048;
 			};
 			name = Debug;
 		};
@@ -491,6 +497,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A6VENAP3WR;
 				INFOPLIST_FILE = PrincessCherry/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -499,6 +506,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				"Texture Atlas Maximum Size" = 2048x2048;
 			};
 			name = Release;
 		};
