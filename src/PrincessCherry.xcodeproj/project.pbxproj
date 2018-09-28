@@ -44,7 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6601AC6A213777B400D4B7CA /* PrincessCherry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrincessCherry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6601AC6A213777B400D4B7CA /* Majestic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Majestic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6601AC6D213777B400D4B7CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6601AC6F213777B500D4B7CA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		6601AC71213777B500D4B7CA /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		6601AC6B213777B400D4B7CA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6601AC6A213777B400D4B7CA /* PrincessCherry.app */,
+				6601AC6A213777B400D4B7CA /* Majestic.app */,
 				6601AC84213777CD00D4B7CA /* PrincessCherryTests.xctest */,
 				6601AC8F213777CD00D4B7CA /* PrincessCherryUITests.xctest */,
 			);
@@ -158,9 +158,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6601AC69213777B300D4B7CA /* PrincessCherry */ = {
+		6601AC69213777B300D4B7CA /* Majestic */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6601AC98213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherry" */;
+			buildConfigurationList = 6601AC98213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "Majestic" */;
 			buildPhases = (
 				6601AC66213777B300D4B7CA /* Sources */,
 				6601AC67213777B300D4B7CA /* Frameworks */,
@@ -170,9 +170,9 @@
 			);
 			dependencies = (
 			);
-			name = PrincessCherry;
+			name = Majestic;
 			productName = PrincessCherry;
-			productReference = 6601AC6A213777B400D4B7CA /* PrincessCherry.app */;
+			productReference = 6601AC6A213777B400D4B7CA /* Majestic.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6601AC83213777CD00D4B7CA /* PrincessCherryTests */ = {
@@ -247,7 +247,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6601AC69213777B300D4B7CA /* PrincessCherry */,
+				6601AC69213777B300D4B7CA /* Majestic */,
 				6601AC83213777CD00D4B7CA /* PrincessCherryTests */,
 				6601AC8E213777CD00D4B7CA /* PrincessCherryUITests */,
 			);
@@ -322,12 +322,12 @@
 /* Begin PBXTargetDependency section */
 		6601AC86213777CD00D4B7CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6601AC69213777B300D4B7CA /* PrincessCherry */;
+			target = 6601AC69213777B300D4B7CA /* Majestic */;
 			targetProxy = 6601AC85213777CD00D4B7CA /* PBXContainerItemProxy */;
 		};
 		6601AC91213777CD00D4B7CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 6601AC69213777B300D4B7CA /* PrincessCherry */;
+			target = 6601AC69213777B300D4B7CA /* Majestic */;
 			targetProxy = 6601AC90213777CD00D4B7CA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -592,7 +592,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6601AC98213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "PrincessCherry" */ = {
+		6601AC98213777CD00D4B7CA /* Build configuration list for PBXNativeTarget "Majestic" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6601AC99213777CD00D4B7CA /* Debug */,

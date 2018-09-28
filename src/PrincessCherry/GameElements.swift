@@ -43,20 +43,22 @@ extension GameScene {
     func createPrince() -> SKSpriteNode {
         //1
         let prince = SKSpriteNode(texture: SKTextureAtlas(named:"prince").textureNamed("prince1"))
+        //Use xScale to -1 to flip on horizontal axis
+        prince.xScale = -1.0
         prince.size = CGSize(width: 100, height: 100)
-        prince.position = CGPoint(x:self.frame.maxX, y:self.frame.minY + 50)
+        prince.position = CGPoint(x:self.frame.minX - 100, y:self.frame.minY + 50)
         //2
         prince.physicsBody = SKPhysicsBody(circleOfRadius: prince.size.width / 2)
         prince.physicsBody?.linearDamping = 0.1
         prince.physicsBody?.restitution = 0.2
         //3
         prince.physicsBody?.categoryBitMask = CollisionBitMask.princeCategory
-        prince.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
+        //prince.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
         prince.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
         //4
         prince.physicsBody?.affectedByGravity = false
         prince.physicsBody?.isDynamic = true
-        
+        //prince.setScale(-0.5)
         return prince
     }
     

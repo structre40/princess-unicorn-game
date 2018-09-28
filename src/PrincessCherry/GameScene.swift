@@ -12,7 +12,8 @@ import GameplayKit
 class GameScene: SKScene , SKPhysicsContactDelegate {
     var isGameStarted = Bool(false)
     var isSleeping = Bool(false)
-
+    var isPrinceMoving = Bool(false)
+    
     let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
     let doubleCoinSound = SKAction.playSoundFileNamed("DoubleCoinSound.mp3", waitForCompletion: false)
     let eatingAppleSound = SKAction.playSoundFileNamed("EatingApple.mp3", waitForCompletion: false)
@@ -160,9 +161,14 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu3"))
         princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu4"))
         
-        //Create the princess unicorn
+        //Create the prince and princess unicorn
         self.princessUnicorn = createPrincessUnicorn()
         self.addChild(princessUnicorn)
+        self.prince = createPrince()
+        princeSprites.append(princeAtlas.textureNamed("prince1"))
+        princeSprites.append(princeAtlas.textureNamed("prince2"))
+        princeSprites.append(princeAtlas.textureNamed("prince3"))
+        princeSprites.append(princeAtlas.textureNamed("prince4"))
         
         //PREPARE TO ANIMATE THE PRINCESS UNICORN AND REPEAT THE ANIMATION FOREVER
         let animatePrincessUnicorn = SKAction.animate(with: self.princessUnicornSprites, timePerFrame: 0.1)
@@ -192,11 +198,13 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             }))
             if isSleeping == false{
                 isSleeping = true
+                self.addChild(prince)
+                showPrinceAnimation()
                 createRestartBtn()
                 pauseBtn.removeFromParent()
                 self.princessUnicorn.removeAllActions()
                 self.cherryNode.removeFromParent()
-                showPrinceAnimation()
+                self.badAppleNode.removeFromParent()
             }
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
             run(coinSound)
@@ -229,40 +237,31 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            //TODO Make prince move in closer before playing sound
-            //Possibly remove CollisionBitMask
-            let move = SKAction.moveTo(x:self.prince.position.x - 100, duration: 1.0)
-            prince.run(move)
             run(kissSound)
-            self.prince.removeAction(forKey: "princeWalk")
+            prince.physicsBody?.contactTestBitMask = 0;
+            prince.physicsBody?.isDynamic = false;
+            //prince.removeAllActions()
             
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
-            let move = SKAction.moveTo(x:self.prince.position.x - 100, duration: 1.0)
-            prince.run(move)
             run(kissSound)
-            self.prince.removeAction(forKey: "princeWalk")
-            
+            prince.physicsBody?.contactTestBitMask = 0;
+            prince.physicsBody?.isDynamic = false;
+            //prince.removeAllActions()
         }
     }
     func showPrinceAnimation() {
-        //Show the prince and animate
-        //SET UP THE PRINCE SPRITES FOR ANIMATION
-        princeSprites.append(princeAtlas.textureNamed("prince1"))
-        princeSprites.append(princeAtlas.textureNamed("prince2"))
-        princeSprites.append(princeAtlas.textureNamed("prince3"))
-        princeSprites.append(princeAtlas.textureNamed("prince4"))
         
-        //Create the prince
-        self.prince = createPrince()
-        self.addChild(prince)
+        //prince.run(SKAction.scale(to: 1.0, duration: 0.3))
         
         //PREPARE TO ANIMATE THE PRINCE AND REPEAT THE ANIMATION FOREVER
         let animatePrince = SKAction.animate(with: self.princeSprites, timePerFrame: 0.1)
         self.repeatActionPrince = SKAction.repeatForever(animatePrince)
         self.prince.run(repeatActionPrince, withKey: "princeWalk")
         
-        let move = SKAction.moveTo(x:0, duration: 5.0)
-        prince.run(move)
+        let move = SKAction.moveTo(x:frame.maxX, duration: 3.0)
+        prince.run(move) {
+            self.prince.removeFromParent()
+        }
         
     }
     func restartScene(){
