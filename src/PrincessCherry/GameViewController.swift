@@ -11,15 +11,23 @@ import SpriteKit
 
 class GameViewController: UIViewController {
     
+    var scene = GameScene()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let scene = GameScene(size: view.bounds.size)
+        scene = GameScene(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = false
         skView.showsNodeCount = false
         skView.ignoresSiblingOrder = false
         scene.scaleMode = .resizeFill
+        NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
         skView.presentScene(scene)
+    }
+    
+    @objc func defaultsChanged()
+    {
+        scene.showWallsPreference = UserDefaults.standard.bool(forKey: "display_columns_preference")
     }
     
     override var shouldAutorotate: Bool {

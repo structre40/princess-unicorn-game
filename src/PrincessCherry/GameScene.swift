@@ -25,12 +25,17 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var highscoreLbl = SKLabelNode()
     var taptoplayLbl = SKLabelNode()
     var restartBtn = SKSpriteNode()
+    var settingsBtn = SKSpriteNode()
     var pauseBtn = SKSpriteNode()
     var logoImg = SKSpriteNode()
     var wallPair = SKNode()
     var cherryNode = SKSpriteNode()
     var badAppleNode = SKSpriteNode()
     var moveAndRemove = SKAction()
+    
+    //Preferences
+    var showWallsPreference = UserDefaults.standard.bool(forKey: "display_columns_preference")
+    
     
     //CREATE THE PLAYER ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
@@ -42,6 +47,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var princeSprites = Array<SKTexture>()
     var prince = SKSpriteNode()
     var repeatActionPrince = SKAction()
+    
     
     override func didMove(to view: SKView) {
         createScene()
@@ -64,7 +70,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             let spawn = SKAction.run({
                 () in
                 
-                self.wallPair = self.createPlayableItems(score: self.score)
+                self.wallPair = self.createPlayableItems(score: self.score, showWalls: self.showWallsPreference)
                 self.addChild(self.wallPair)
             })
             //Wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
@@ -102,6 +108,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                         UserDefaults.standard.set(0, forKey: "highestScore")
                     }
                     restartScene()
+                }
+                else if (settingsBtn.contains(location))
+                {
+                    //Open the settings menu
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
                 }
             } else {
                 //2
@@ -204,6 +215,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 
                 showPrinceAnimation()
                 createRestartBtn()
+                createSettingsBtn()
                 pauseBtn.removeFromParent()
                 self.princessUnicorn.removeAllActions()
                 self.cherryNode.removeFromParent()

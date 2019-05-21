@@ -21,19 +21,19 @@ struct CollisionBitMask {
 extension GameScene {
     
     func createPrincessUnicorn() -> SKSpriteNode {
-        //1
+        //Create the unicorn
         let princessUnicorn = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("pu1"))
         princessUnicorn.size = CGSize(width: 100, height: 100)
         princessUnicorn.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
-        //2
+        //Setup Physics body
         princessUnicorn.physicsBody = SKPhysicsBody(circleOfRadius: princessUnicorn.size.width / 2)
         princessUnicorn.physicsBody?.linearDamping = 1.1
         princessUnicorn.physicsBody?.restitution = 0
-        //3
+        //Set bitmask to check collisions
         princessUnicorn.physicsBody?.categoryBitMask = CollisionBitMask.princessCategory
         princessUnicorn.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
         princessUnicorn.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.singleCherryCategory | CollisionBitMask.groundCategory | CollisionBitMask.doubleCherryCategory | CollisionBitMask.badAppleCategory
-        //4
+        //Set gravity properties
         princessUnicorn.physicsBody?.affectedByGravity = false
         princessUnicorn.physicsBody?.isDynamic = true
         
@@ -72,6 +72,17 @@ extension GameScene {
         restartBtn.setScale(0)
         self.addChild(restartBtn)
         restartBtn.run(SKAction.scale(to: 1.0, duration: 0.3))
+    }
+    //Creates the settings button and opens default settings
+    func createSettingsBtn() {
+        
+        settingsBtn = SKSpriteNode(imageNamed: "restart")
+        settingsBtn.size = CGSize(width:50, height:50)
+        settingsBtn.position = CGPoint(x: 50 , y: self.frame.height)
+        settingsBtn.zPosition = 6
+        settingsBtn.setScale(0)
+        self.addChild(settingsBtn)
+        settingsBtn.run(SKAction.scale(to: 1.0, duration: 0.3))
     }
     //Creates the pause button to be displayed during the game running
     func createPauseBtn() {
@@ -136,7 +147,7 @@ extension GameScene {
         return taptoplayLbl
     }
     
-    func createPlayableItems(score: Int) -> SKNode  {
+    func createPlayableItems(score: Int, showWalls: Bool) -> SKNode  {
         let randomBadApple = Int.random(in: 1..<10)
         
         //If the score is a factor of 10, do the double cherry
@@ -171,12 +182,11 @@ extension GameScene {
             cherryNode.color = SKColor.blue
             
         }
-        if score > 5 {
+        if (showWalls) {
             
             let topWall = SKSpriteNode(imageNamed: "pillarVines")
             let btmWall = SKSpriteNode(imageNamed: "pillarVines")
             
-            //TODO: Make this increasingly smaller the more score the user gets
             topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 500 - CGFloat(score))
             btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 500 + CGFloat(score))
             

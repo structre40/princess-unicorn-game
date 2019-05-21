@@ -21,6 +21,7 @@
 		6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6601ACA321377A0700D4B7CA /* CoinSound.mp3 */; };
 		6601ACA621377B3A00D4B7CA /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6601ACA521377B3900D4B7CA /* GameElements.swift */; };
 		6610DCD1215345E600351275 /* prince.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 6610DCD0215345E600351275 /* prince.atlas */; };
+		668D2B812291BE2C003DE89D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 668D2B802291BE2C003DE89D /* Settings.bundle */; };
 		66E44D8A215B2DCD00814752 /* DoubleCoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */; };
 		66E44D8B215B2DCD00814752 /* EatingApple.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D89215B2DCD00814752 /* EatingApple.mp3 */; };
 		66E44D8D215B47CE00814752 /* Kiss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E44D8C215B47CE00814752 /* Kiss.mp3 */; };
@@ -65,6 +66,7 @@
 		6601ACA321377A0700D4B7CA /* CoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CoinSound.mp3; sourceTree = "<group>"; };
 		6601ACA521377B3900D4B7CA /* GameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
 		6610DCD0215345E600351275 /* prince.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = prince.atlas; sourceTree = "<group>"; };
+		668D2B802291BE2C003DE89D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DoubleCoinSound.mp3; sourceTree = "<group>"; };
 		66E44D89215B2DCD00814752 /* EatingApple.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = EatingApple.mp3; sourceTree = "<group>"; };
 		66E44D8C215B47CE00814752 /* Kiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Kiss.mp3; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		6601AC6C213777B400D4B7CA /* PrincessCherry */ = {
 			isa = PBXGroup;
 			children = (
+				668D2B802291BE2C003DE89D /* Settings.bundle */,
 				6610DCD0215345E600351275 /* prince.atlas */,
 				6601ACA321377A0700D4B7CA /* CoinSound.mp3 */,
 				66E44D88215B2DCD00814752 /* DoubleCoinSound.mp3 */,
@@ -264,6 +267,7 @@
 			files = (
 				6601ACA421377A0700D4B7CA /* CoinSound.mp3 in Resources */,
 				6601ACA2213779F500D4B7CA /* player.atlas in Resources */,
+				668D2B812291BE2C003DE89D /* Settings.bundle in Resources */,
 				66E44D8D215B47CE00814752 /* Kiss.mp3 in Resources */,
 				6601AC79213777B600D4B7CA /* Main.storyboard in Resources */,
 				6610DCD1215345E600351275 /* prince.atlas in Resources */,
