@@ -76,9 +76,9 @@ extension GameScene {
     //Creates the settings button and opens default settings
     func createSettingsBtn() {
         
-        settingsBtn = SKSpriteNode(imageNamed: "restart")
+        settingsBtn = SKSpriteNode(imageNamed: "settings")
         settingsBtn.size = CGSize(width:50, height:50)
-        settingsBtn.position = CGPoint(x: 50 , y: self.frame.height)
+        settingsBtn.position = CGPoint(x: 50 , y: self.frame.height - 50)
         settingsBtn.zPosition = 6
         settingsBtn.setScale(0)
         self.addChild(settingsBtn)

@@ -14,11 +14,10 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var isSleeping = Bool(false)
     var isPrinceMoving = Bool(false)
     
-    let coinSound = SKAction.playSoundFileNamed("CoinSound.mp3", waitForCompletion: false)
-    let doubleCoinSound = SKAction.playSoundFileNamed("DoubleCoinSound.mp3", waitForCompletion: false)
-    let eatingAppleSound = SKAction.playSoundFileNamed("EatingApple.mp3", waitForCompletion: false)
-     let kissSound = SKAction.playSoundFileNamed("kiss2.mp3", waitForCompletion: false)
-    //TODO: They fall to the ground and to restart a prince comes and gives them a kiss
+    let coinSound = "CoinSound.mp3"
+    let doubleCoinSound = "DoubleCoinSound.mp3"
+    let eatingAppleSound = "EatingApple.mp3"
+     let kissSound = "kiss2.mp3"
     
     var score = Int(0)
     var scoreLbl = SKLabelNode()
@@ -35,7 +34,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     
     //Preferences
     var showWallsPreference = UserDefaults.standard.bool(forKey: "display_columns_preference")
-    
+    var playSoundsPreference = UserDefaults.standard.bool(forKey: "play_sounds_preference")
     
     //CREATE THE PLAYER ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
@@ -63,6 +62,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 self.logoImg.removeFromParent()
             })
             taptoplayLbl.removeFromParent()
+            settingsBtn.removeFromParent()
+            
             //Run the princess animations for flapping
             self.princessUnicorn.run(repeatActionPrincessUnicorn)
             
@@ -194,9 +195,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         self.addChild(highscoreLbl)
         
         createLogo()
+        createSettingsBtn()
         
         taptoplayLbl = createTaptoplayLabel()
         self.addChild(taptoplayLbl)
+        
+        
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -222,51 +226,49 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 self.badAppleNode.removeFromParent()
             }
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
-            run(coinSound)
+            playSound(coinSound)
             score += 1
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.singleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            run(coinSound)
+            playSound(coinSound)
             score += 1
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.doubleCherryCategory {
-            run(doubleCoinSound)
+            playSound(doubleCoinSound)
             score += 2
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.doubleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            run(doubleCoinSound)
+            playSound(doubleCoinSound)
             score += 2
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.badAppleCategory {
-            run(eatingAppleSound)
+            playSound(eatingAppleSound)
             score -= 5
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.badAppleCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            run(eatingAppleSound)
+            playSound(eatingAppleSound)
             score -= 5
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
-            run(kissSound)
+            playSound(kissSound)
             prince.physicsBody?.contactTestBitMask = 0;
             prince.physicsBody?.isDynamic = false;
             //prince.removeAllActions()
             
         } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
-            run(kissSound)
+            playSound(kissSound)
             prince.physicsBody?.contactTestBitMask = 0;
             prince.physicsBody?.isDynamic = false;
             //prince.removeAllActions()
         }
     }
     func showPrinceAnimation() {
-        
-        //prince.run(SKAction.scale(to: 1.0, duration: 0.3))
         
         //PREPARE TO ANIMATE THE PRINCE AND REPEAT THE ANIMATION FOREVER
         self.prince.run(repeatActionPrince, withKey: "princeWalk")
@@ -284,5 +286,14 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         isGameStarted = false
         score = 0
         createScene()
+    }
+    
+    func playSound(_ soundToPlay: String)
+    {
+        //if (self.playSoundsPreference)
+        if(UserDefaults.standard.bool(forKey: "play_sounds_preference"))
+        {
+            run(SKAction.playSoundFileNamed(soundToPlay, waitForCompletion: false))
+        }
     }
 }
