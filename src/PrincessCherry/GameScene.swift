@@ -13,6 +13,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     var isGameStarted = Bool(false)
     var isSleeping = Bool(false)
     var isPrinceMoving = Bool(false)
+    var isPlayerTypePrincess = Bool(true)
     
     let coinSound = "CoinSound.mp3"
     let doubleCoinSound = "DoubleCoinSound.mp3"
@@ -38,9 +39,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     
     //CREATE THE PLAYER ATLAS FOR ANIMATION
     let princessUnicornAtlas = SKTextureAtlas(named:"player")
+    let knightDragonAtlas = SKTextureAtlas(named:"dragonprince")
     var princessUnicornSprites = Array<SKTexture>()
-    var princessUnicorn = SKSpriteNode()
-    var repeatActionPrincessUnicorn = SKAction()
+    var knightDragonSprites = Array<SKTexture>()
+    var playerSpriteNode = SKSpriteNode()
+    var repeatActionPlayer = SKAction()
     
     let princeAtlas = SKTextureAtlas(named:"prince")
     var princeSprites = Array<SKTexture>()
@@ -53,9 +56,9 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isGameStarted == false{
-            //Start princess unicorn to be affected by gravity requiring use to tap and create pause button
+            //Start player to be affected by gravity requiring use to tap and create pause button
             isGameStarted =  true
-            princessUnicorn.physicsBody?.affectedByGravity = true
+            playerSpriteNode.physicsBody?.affectedByGravity = true
             createPauseBtn()
             //Run the logo shrinking and removal
             logoImg.run(SKAction.scale(to: 0.5, duration: 0.3), completion: {
@@ -64,8 +67,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             taptoplayLbl.removeFromParent()
             settingsBtn.removeFromParent()
             
-            //Run the princess animations for flapping
-            self.princessUnicorn.run(repeatActionPrincessUnicorn)
+            //Run the player animations for flapping
+            self.playerSpriteNode.run(repeatActionPlayer)
             
             //This run an action that creates and add pillar pairs to the scene.
             let spawn = SKAction.run({
@@ -86,44 +89,48 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             let removePillars = SKAction.removeFromParent()
             moveAndRemove = SKAction.sequence([movePillars, removePillars])
             
-            princessUnicorn.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
+            playerSpriteNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            playerSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
         } else {
             //Continue with movement as long as collision did not occur
             if isSleeping == false {
-                princessUnicorn.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                princessUnicorn.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
+                playerSpriteNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                playerSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
             }
         }
         for touch in touches{
             let location = touch.location(in: self)
-            //1
-            if isSleeping == true{
-                if restartBtn.contains(location){
-                    if UserDefaults.standard.object(forKey: "highestScore") != nil {
-                        let hscore = UserDefaults.standard.integer(forKey: "highestScore")
-                        if hscore < Int(scoreLbl.text!)!{
-                            UserDefaults.standard.set(scoreLbl.text, forKey: "highestScore")
+            if (settingsBtn.contains(location))
+            {
+                //Open the settings menu
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+            else
+            {
+                //Check if the game is active
+                if isSleeping == true{
+                    if restartBtn.contains(location){
+                        if UserDefaults.standard.object(forKey: "highestScore") != nil {
+                            let hscore = UserDefaults.standard.integer(forKey: "highestScore")
+                            if hscore < Int(scoreLbl.text!)!{
+                                UserDefaults.standard.set(scoreLbl.text, forKey: "highestScore")
+                            }
+                        } else {
+                            UserDefaults.standard.set(0, forKey: "highestScore")
                         }
-                    } else {
-                        UserDefaults.standard.set(0, forKey: "highestScore")
+                        restartScene()
                     }
-                    restartScene()
-                }
-                else if (settingsBtn.contains(location))
-                {
-                    //Open the settings menu
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
-                }
-            } else {
-                //2
-                if pauseBtn.contains(location){
-                    if self.isPaused == false{
-                        self.isPaused = true
-                        pauseBtn.texture = SKTexture(imageNamed: "play")
-                    } else {
-                        self.isPaused = false
-                        pauseBtn.texture = SKTexture(imageNamed: "pause")
+                    
+                } else {
+                    //If the game is active and the user clicks pause
+                    if pauseBtn.contains(location){
+                        if self.isPaused == false{
+                            self.isPaused = true
+                            pauseBtn.texture = SKTexture(imageNamed: "play")
+                        } else {
+                            self.isPaused = false
+                            pauseBtn.texture = SKTexture(imageNamed: "pause")
+                        }
                     }
                 }
             }
@@ -149,8 +156,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
     func createScene(){
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsBody?.categoryBitMask = CollisionBitMask.groundCategory
-        self.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
-        self.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+        self.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
+        self.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
         self.physicsBody?.isDynamic = false
         self.physicsBody?.affectedByGravity = false
         
@@ -167,15 +174,19 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             self.addChild(background)
         }
         
-        //SET UP THE UNICORN SPRITES FOR ANIMATION
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu1"))
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu2"))
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu3"))
-        princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu4"))
+        //Check the settings in case they changed and we need to update the player being used
+        if(UserDefaults.standard.string(forKey: "player_type_preference") == "princess")
+        {
+            isPlayerTypePrincess = true;
+        }
+        else
+        {
+            isPlayerTypePrincess = false;
+        }
         
-        //Create the prince and princess unicorn
-        self.princessUnicorn = createPrincessUnicorn()
-        self.addChild(princessUnicorn)
+        //Create the prince and player based on settings
+        self.playerSpriteNode = createPlayer(atlasName: isPlayerTypePrincess ? "player" : "dragonprince", textureName: isPlayerTypePrincess ? "pu1" : "DragonPrince1")
+        self.addChild(playerSpriteNode)
         self.prince = createPrince()
         princeSprites.append(princeAtlas.textureNamed("prince1"))
         princeSprites.append(princeAtlas.textureNamed("prince2"))
@@ -184,9 +195,26 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         let animatePrince = SKAction.animate(with: self.princeSprites, timePerFrame: 0.1)
         self.repeatActionPrince = SKAction.repeatForever(animatePrince)
         
-        //PREPARE TO ANIMATE THE PRINCESS UNICORN AND REPEAT THE ANIMATION FOREVER
-        let animatePrincessUnicorn = SKAction.animate(with: self.princessUnicornSprites, timePerFrame: 0.1)
-        self.repeatActionPrincessUnicorn = SKAction.repeatForever(animatePrincessUnicorn)
+        var animatePlayer = SKAction()
+        //Prepare to animate the player as selected in settings and animate forever
+        if(isPlayerTypePrincess)
+        {
+            princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu1"))
+            princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu2"))
+            princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu3"))
+            princessUnicornSprites.append(princessUnicornAtlas.textureNamed("pu4"))
+            animatePlayer = SKAction.animate(with: self.princessUnicornSprites, timePerFrame: 0.1)
+        }
+        else
+        {
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu1"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu2"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu3"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu4"))
+            animatePlayer = SKAction.animate(with: self.knightDragonSprites, timePerFrame: 0.1)
+        }
+        
+        self.repeatActionPlayer = SKAction.repeatForever(animatePlayer)
         
         scoreLbl = createScoreLabel()
         self.addChild(scoreLbl)
@@ -207,7 +235,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         let firstBody = contact.bodyA
         let secondBody = contact.bodyB
         
-        if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.pillarCategory || firstBody.categoryBitMask == CollisionBitMask.pillarCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory || firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.groundCategory || firstBody.categoryBitMask == CollisionBitMask.groundCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory{
+        if firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.pillarCategory || firstBody.categoryBitMask == CollisionBitMask.pillarCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory || firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.groundCategory || firstBody.categoryBitMask == CollisionBitMask.groundCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory{
             enumerateChildNodes(withName: "wallPair", using: ({
                 (node, error) in
                 node.speed = 0
@@ -217,51 +245,52 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
                 isSleeping = true
                 self.addChild(prince)
                 
-                showPrinceAnimation()
+                //Dont do the prince animation for now
+                //showPrinceAnimation()
                 createRestartBtn()
                 createSettingsBtn()
                 pauseBtn.removeFromParent()
-                self.princessUnicorn.removeAllActions()
+                self.playerSpriteNode.removeAllActions()
                 self.cherryNode.removeFromParent()
                 self.badAppleNode.removeFromParent()
             }
-        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.singleCherryCategory {
             playSound(coinSound)
             score += 1
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.singleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.singleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory {
             playSound(coinSound)
             score += 1
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.doubleCherryCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.doubleCherryCategory {
             playSound(doubleCoinSound)
             score += 2
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.doubleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.doubleCherryCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory {
             playSound(doubleCoinSound)
             score += 2
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.badAppleCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.badAppleCategory {
             playSound(eatingAppleSound)
             score -= 5
             scoreLbl.text = "\(score)"
             secondBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.badAppleCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.badAppleCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory {
             playSound(eatingAppleSound)
             score -= 5
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
-        } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.princessCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory {
             playSound(kissSound)
             prince.physicsBody?.contactTestBitMask = 0;
             prince.physicsBody?.isDynamic = false;
             //prince.removeAllActions()
             
-        } else if firstBody.categoryBitMask == CollisionBitMask.princessCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
+        } else if firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
             playSound(kissSound)
             prince.physicsBody?.contactTestBitMask = 0;
             prince.physicsBody?.isDynamic = false;

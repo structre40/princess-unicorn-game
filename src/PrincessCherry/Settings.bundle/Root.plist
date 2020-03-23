@@ -8,9 +8,23 @@
 	<array>
 		<dict>
 			<key>Type</key>
-			<string>PSGroupSpecifier</string>
+			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Group</string>
+			<string>Player Type</string>
+			<key>Key</key>
+			<string>player_type_preference</string>
+			<key>DefaultValue</key>
+			<string>Princess and Unicorn</string>
+			<key>Titles</key>
+			<array>
+				<string>Princess and Unicorn</string>
+				<string>Knight and Dragon</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>princess</string>
+				<string>knight</string>
+			</array>
 		</dict>
 		<dict>
 			<key>Type</key>

@@ -2,14 +2,14 @@
 //  GameElements.swift
 //  PrincessCherry
 //
-//  Created by Adam on 8/29/18.
-//  Copyright © 2018 Adam Johnson. All rights reserved.
+//  Modified by Adam on 03/23/2020
+//  Copyright © 2020 Adam Johnson. All rights reserved.
 //
 
 import SpriteKit
 
 struct CollisionBitMask {
-    static let princessCategory:UInt32 = 0x1 << 0
+    static let playerCategory:UInt32 = 0x1 << 0
     static let pillarCategory:UInt32 = 0x1 << 1
     static let singleCherryCategory:UInt32 = 0x1 << 2
     static let groundCategory:UInt32 = 0x1 << 3
@@ -20,24 +20,25 @@ struct CollisionBitMask {
 
 extension GameScene {
     
-    func createPrincessUnicorn() -> SKSpriteNode {
+    func createPlayer(atlasName: String, textureName: String) -> SKSpriteNode {
         //Create the unicorn
-        let princessUnicorn = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("pu1"))
-        princessUnicorn.size = CGSize(width: 100, height: 100)
-        princessUnicorn.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
+        //let princessUnicorn = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("pu1"))
+        let player = SKSpriteNode(texture: SKTextureAtlas(named:atlasName).textureNamed(textureName))
+        player.size = CGSize(width: 100, height: 100)
+        player.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
         //Setup Physics body
-        princessUnicorn.physicsBody = SKPhysicsBody(circleOfRadius: princessUnicorn.size.width / 2)
-        princessUnicorn.physicsBody?.linearDamping = 1.1
-        princessUnicorn.physicsBody?.restitution = 0
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width / 2)
+        player.physicsBody?.linearDamping = 1.1
+        player.physicsBody?.restitution = 0
         //Set bitmask to check collisions
-        princessUnicorn.physicsBody?.categoryBitMask = CollisionBitMask.princessCategory
-        princessUnicorn.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
-        princessUnicorn.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.singleCherryCategory | CollisionBitMask.groundCategory | CollisionBitMask.doubleCherryCategory | CollisionBitMask.badAppleCategory
+        player.physicsBody?.categoryBitMask = CollisionBitMask.playerCategory
+        player.physicsBody?.collisionBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.groundCategory
+        player.physicsBody?.contactTestBitMask = CollisionBitMask.pillarCategory | CollisionBitMask.singleCherryCategory | CollisionBitMask.groundCategory | CollisionBitMask.doubleCherryCategory | CollisionBitMask.badAppleCategory
         //Set gravity properties
-        princessUnicorn.physicsBody?.affectedByGravity = false
-        princessUnicorn.physicsBody?.isDynamic = true
+        player.physicsBody?.affectedByGravity = false
+        player.physicsBody?.isDynamic = true
         
-        return princessUnicorn
+        return player
     }
     
     func createPrince() -> SKSpriteNode {
@@ -54,7 +55,7 @@ extension GameScene {
         //3
         prince.physicsBody?.categoryBitMask = CollisionBitMask.princeCategory
         //prince.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
-        prince.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+        prince.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
         //4
         prince.physicsBody?.affectedByGravity = false
         prince.physicsBody?.isDynamic = true
@@ -164,7 +165,7 @@ extension GameScene {
             cherryNode.physicsBody?.isDynamic = false
             cherryNode.physicsBody?.categoryBitMask = CollisionBitMask.doubleCherryCategory
             cherryNode.physicsBody?.collisionBitMask = 0
-            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
             cherryNode.color = SKColor.blue
         }
         else
@@ -178,7 +179,7 @@ extension GameScene {
             cherryNode.physicsBody?.isDynamic = false
             cherryNode.physicsBody?.categoryBitMask = CollisionBitMask.singleCherryCategory
             cherryNode.physicsBody?.collisionBitMask = 0
-            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            cherryNode.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
             cherryNode.color = SKColor.blue
             
         }
@@ -195,15 +196,15 @@ extension GameScene {
             
             topWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
             topWall.physicsBody?.categoryBitMask = CollisionBitMask.pillarCategory
-            topWall.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
-            topWall.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            topWall.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
+            topWall.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
             topWall.physicsBody?.isDynamic = false
             topWall.physicsBody?.affectedByGravity = false
             
             btmWall.physicsBody = SKPhysicsBody(rectangleOf: btmWall.size)
             btmWall.physicsBody?.categoryBitMask = CollisionBitMask.pillarCategory
-            btmWall.physicsBody?.collisionBitMask = CollisionBitMask.princessCategory
-            btmWall.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            btmWall.physicsBody?.collisionBitMask = CollisionBitMask.playerCategory
+            btmWall.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
             btmWall.physicsBody?.isDynamic = false
             btmWall.physicsBody?.affectedByGravity = false
         
@@ -235,7 +236,7 @@ extension GameScene {
             badAppleNode.physicsBody?.isDynamic = false
             badAppleNode.physicsBody?.categoryBitMask = CollisionBitMask.badAppleCategory
             badAppleNode.physicsBody?.collisionBitMask = 0
-            badAppleNode.physicsBody?.contactTestBitMask = CollisionBitMask.princessCategory
+            badAppleNode.physicsBody?.contactTestBitMask = CollisionBitMask.playerCategory
             badAppleNode.color = SKColor.blue
             wallPair.removeAllChildren()
             wallPair.addChild(badAppleNode)
