@@ -96,7 +96,7 @@ extension GameScene {
     //3
     func createScoreLabel() -> SKLabelNode {
         let scoreLbl = SKLabelNode()
-        scoreLbl.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + self.frame.height / 2.6)
+        scoreLbl.position = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2 + self.frame.height / 2.65)
         scoreLbl.text = "\(score)"
         scoreLbl.zPosition = 5
         scoreLbl.fontSize = 50
@@ -115,7 +115,7 @@ extension GameScene {
     //4
     func createHighscoreLabel() -> SKLabelNode {
         let highscoreLbl = SKLabelNode()
-        highscoreLbl.position = CGPoint(x: self.frame.width - 80, y: self.frame.height - 22)
+        highscoreLbl.position = CGPoint(x: self.frame.width - 50, y: self.frame.height - 50)
         if let highestScore = UserDefaults.standard.object(forKey: "highestScore"){
             highscoreLbl.text = "Hi Score: \(highestScore)"
         } else {

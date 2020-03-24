@@ -55,42 +55,53 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         createScene()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isGameStarted == false{
-            //Start player to be affected by gravity requiring use to tap and create pause button
-            isGameStarted =  true
-            playerSpriteNode.physicsBody?.affectedByGravity = true
-            createPauseBtn()
-            //Run the logo shrinking and removal
-            logoImg.run(SKAction.scale(to: 0.5, duration: 0.3), completion: {
-                self.logoImg.removeFromParent()
-            })
-            taptoplayLbl.removeFromParent()
-            settingsBtn.removeFromParent()
-            
-            //Run the player animations for flapping
-            self.playerSpriteNode.run(repeatActionPlayer)
-            
-            //This run an action that creates and add pillar pairs to the scene.
-            let spawn = SKAction.run({
-                () in
+        if (isGameStarted == false)
+        {
+            let touch = touches.first!
+            let location = touch.location(in: self.view)
+            if (settingsBtn.contains(location))
+            {
+                //Open the settings menu instead of starting the game
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            }
+            else
+            {
+                //Start player to be affected by gravity requiring use to tap and create pause button
+                isGameStarted =  true
+                playerSpriteNode.physicsBody?.affectedByGravity = true
+                createPauseBtn()
+                //Run the logo shrinking and removal
+                logoImg.run(SKAction.scale(to: 0.5, duration: 0.3), completion: {
+                    self.logoImg.removeFromParent()
+                })
+                taptoplayLbl.removeFromParent()
+                settingsBtn.removeFromParent()
                 
-                self.wallPair = self.createPlayableItems(score: self.score, showWalls: self.showWallsPreference)
-                self.addChild(self.wallPair)
-            })
-            //Wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
-            let delay = SKAction.wait(forDuration: 2.0)
-            let SpawnDelay = SKAction.sequence([spawn, delay])
-            let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
-            self.run(spawnDelayForever)
-            
-            //Move the pillars and remove as they get to the end of the frame
-            let distance = CGFloat(self.frame.width + wallPair.frame.width)
-            let movePillars = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
-            let removePillars = SKAction.removeFromParent()
-            moveAndRemove = SKAction.sequence([movePillars, removePillars])
-            
-            playerSpriteNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            playerSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
+                //Run the player animations for flapping
+                self.playerSpriteNode.run(repeatActionPlayer)
+                
+                //This run an action that creates and add pillar pairs to the scene.
+                let spawn = SKAction.run({
+                    () in
+                    
+                    self.wallPair = self.createPlayableItems(score: self.score, showWalls: self.showWallsPreference)
+                    self.addChild(self.wallPair)
+                })
+                //Wait for 2 seconds for the next set of pillars to be generated. A sequence of actions will run the spawn and delay actions forever.
+                let delay = SKAction.wait(forDuration: 2.0)
+                let SpawnDelay = SKAction.sequence([spawn, delay])
+                let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+                self.run(spawnDelayForever)
+                
+                //Move the pillars and remove as they get to the end of the frame
+                let distance = CGFloat(self.frame.width + wallPair.frame.width)
+                let movePillars = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+                let removePillars = SKAction.removeFromParent()
+                moveAndRemove = SKAction.sequence([movePillars, removePillars])
+                
+                playerSpriteNode.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                playerSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 200))
+                }
         } else {
             //Continue with movement as long as collision did not occur
             if isSleeping == false {
@@ -207,10 +218,10 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
         }
         else
         {
-            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu1"))
-            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu2"))
-            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu3"))
-            knightDragonSprites.append(knightDragonAtlas.textureNamed("pu4"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("DragonPrince1"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("DragonPrince2"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("DragonPrince3"))
+            knightDragonSprites.append(knightDragonAtlas.textureNamed("DragonPrince4"))
             animatePlayer = SKAction.animate(with: self.knightDragonSprites, timePerFrame: 0.1)
         }
         
@@ -285,13 +296,11 @@ class GameScene: SKScene , SKPhysicsContactDelegate {
             scoreLbl.text = "\(score)"
             firstBody.node?.removeFromParent()
         } else if firstBody.categoryBitMask == CollisionBitMask.princeCategory && secondBody.categoryBitMask == CollisionBitMask.playerCategory {
-            playSound(kissSound)
             prince.physicsBody?.contactTestBitMask = 0;
             prince.physicsBody?.isDynamic = false;
             //prince.removeAllActions()
             
         } else if firstBody.categoryBitMask == CollisionBitMask.playerCategory && secondBody.categoryBitMask == CollisionBitMask.princeCategory {
-            playSound(kissSound)
             prince.physicsBody?.contactTestBitMask = 0;
             prince.physicsBody?.isDynamic = false;
             //prince.removeAllActions()
